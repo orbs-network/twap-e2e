@@ -12,7 +12,7 @@ describe('QuickSwap', () => {
 
     if (disclaimer) {
       cy.get('input[type=checkbox]').click({ multiple: true });
-      cy.get('button').contains('Confirm').click();
+      cy.get('button').click({ multiple: true });
     }
 
     cy.get('.swapLimitTab').contains('TWAP').should('exist');
