@@ -13,9 +13,4 @@ describe('SpiritSwap', () => {
 
     cy.get('.twap-container').should('exist');
   });
-
-  after(() => {
-    // post results to the dashboard
-    console.log('post results');
-  });
 });
