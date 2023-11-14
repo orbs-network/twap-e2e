@@ -4,7 +4,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
 });
 
-describe('Chronos', () => {
+describe('Pangolin', () => {
   it('renders successfully', () => {
     cy.visit('https://app.pangolin.exchange/#/swap');
 
