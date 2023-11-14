@@ -10,8 +10,9 @@ async function postResults(results) {
       },
       body: JSON.stringify(results),
     });
+    console.log('Results posted successfully');
   } catch (err) {
-    console.log('error posting results', err);
+    console.log('Error posting results', err);
   }
 }
 
