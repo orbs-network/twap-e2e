@@ -4,12 +4,12 @@ Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
 });
 
-describe('SpiritSwap', () => {
+describe('SpookySwap', () => {
   it('renders successfully', () => {
-    cy.visit('https://www.spiritswap.finance/swap/FTM/SPIRIT');
+    cy.visit('https://spooky.fi/#/swap');
 
-    cy.get('button').contains('TWAP').should('exist');
-    cy.get('button').contains('TWAP').click();
+    cy.get('#twap-nav-link').should('exist');
+    cy.get('#twap-nav-link').click();
 
     cy.get('.twap-container').should('exist');
   });
