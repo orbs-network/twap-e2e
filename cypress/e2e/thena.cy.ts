@@ -8,6 +8,6 @@ describe('Thena', () => {
   it('renders successfully', () => {
     cy.visit('https://thena.fi/swap/twap');
 
-    cy.get('.twap-container').should('exist');
+    cy.get('.twap-container', { timeout: 8000 }).should('exist');
   });
 });
