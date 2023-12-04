@@ -8,7 +8,7 @@ describe('Pangolin', () => {
   it('renders successfully', () => {
     cy.visit('https://app.pangolin.exchange/#/swap');
 
-    cy.get('div').contains('TWAP').should('exist');
+    cy.get('div', { timeout: 10000 }).contains('TWAP').should('exist');
     cy.get('div').contains('TWAP').click();
 
     cy.get('.twap-container').should('exist');

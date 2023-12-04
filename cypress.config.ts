@@ -36,13 +36,28 @@ async function postResults(results: TestResults) {
       .map((run) => {
         return run.tests
           .map((test) => {
-            return `*${test.title[0]}*: ${test.state === 'passed' ? '✅' : '❌'}`;
+            let emoji = '';
+            switch (test.state) {
+              case 'passed':
+                emoji = '✅';
+                break;
+              case 'failed':
+                emoji = '❌';
+                break;
+              case 'pending':
+                emoji = '⏭️';
+                break;
+              case 'skipped':
+                emoji = '⚠️';
+                break;
+            }
+            return `*${test.title[0]}*: ${emoji}`;
           })
           .join('\n');
       })
       .join('\n');
 
-    message += `\n\nTotal tests: ${results.totalTests}\nTotal passed: ${results.totalPassed}\nTotal failed: ${results.totalFailed}`;
+    message += `\n\nTotal tests: ${results.totalTests}\nTotal passed: ${results.totalPassed}\nTotal failed: ${results.totalFailed}\nTotal skipped: ${results.totalSkipper}\nTotal pending: ${results.totalPending}`;
     console.log(message);
 
     await axios.post(

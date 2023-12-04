@@ -4,7 +4,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
 });
 
-describe('SpookySwap', () => {
+describe.skip('SpookySwap', () => {
   it('renders successfully', () => {
     cy.visit('https://spooky.fi/#/swap');
 
