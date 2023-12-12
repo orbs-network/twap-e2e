@@ -1,6 +1,7 @@
 import { defineConfig } from 'cypress';
 import { config } from 'dotenv';
 import axios, { AxiosError } from 'axios';
+import { getBorderCharacters, table } from 'table';
 
 config();
 
@@ -9,7 +10,7 @@ type TestResults = {
   totalPassed: number;
   totalFailed: number;
   totalPending: number;
-  totalSkipper: number;
+  totalSkipped: number;
   runs: {
     tests: {
       title: string[];
@@ -32,32 +33,36 @@ async function postResults(results: TestResults) {
   }
 
   try {
-    let message = results.runs
-      .map((run) => {
-        return run.tests
-          .map((test) => {
-            let emoji = '';
-            switch (test.state) {
-              case 'passed':
-                emoji = '✅';
-                break;
-              case 'failed':
-                emoji = '❌';
-                break;
-              case 'pending':
-                emoji = '⏭️';
-                break;
-              case 'skipped':
-                emoji = '⚠️';
-                break;
-            }
-            return `*${test.title[0]}*: ${emoji}`;
-          })
-          .join('\n');
-      })
-      .join('\n');
+    const data = [];
 
-    message += `\n\nTotal tests: ${results.totalTests}\nTotal passed: ${results.totalPassed}\nTotal failed: ${results.totalFailed}\nTotal skipped: ${results.totalSkipper}\nTotal pending: ${results.totalPending}`;
+    results.runs.forEach((run) => {
+      run.tests.forEach((test) => {
+        let emoji = '';
+        switch (test.state) {
+          case 'passed':
+            emoji = '✅';
+            break;
+          case 'failed':
+            emoji = '❌';
+            break;
+          case 'pending':
+            emoji = '⏸️';
+            break;
+          case 'skipped':
+            emoji = '⚠️';
+            break;
+        }
+        data.push([test.title[0], emoji]);
+      });
+    });
+
+    let message = `*📊 TEST RESULTS*\n\n\`\`\`\n${table(data, {
+      border: getBorderCharacters('void'),
+    })}\`\`\`\n\nTotal tests: ${results.totalTests}\nTotal passed: ${
+      results.totalPassed
+    }\nTotal failed: ${results.totalFailed}\nTotal skipped: ${
+      results.totalSkipped
+    }\nTotal paused: ${results.totalPending}`;
     console.log(message);
 
     await axios.post(
@@ -90,7 +95,7 @@ export default defineConfig({
             totalPassed: results.totalPassed,
             totalFailed: results.totalFailed,
             totalPending: results.totalPending,
-            totalSkipper: results.totalSkipped,
+            totalSkipped: results.totalSkipped,
             runs: results.runs.map((run) => {
               return {
                 tests: run.tests.map((test) => {

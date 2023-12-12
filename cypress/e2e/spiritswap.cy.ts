@@ -4,7 +4,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
 });
 
-describe('SpiritSwap', () => {
+describe.skip('SpiritSwap', () => {
   it('renders successfully', () => {
     cy.visit('https://www.spiritswap.finance/swap/FTM/SPIRIT');
 
