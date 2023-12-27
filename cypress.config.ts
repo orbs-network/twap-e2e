@@ -56,7 +56,7 @@ async function postResults(results: TestResults) {
       });
     });
 
-    let message = `*📊 TEST RESULTS*\n\n\`\`\`\n${table(data, {
+    let message = `*📊 TWAP UI*\n\n\`\`\`\n${table(data, {
       border: getBorderCharacters('void'),
     })}\`\`\`\n\nTotal tests: ${results.totalTests}\nTotal passed: ${
       results.totalPassed
